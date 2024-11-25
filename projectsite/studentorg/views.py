@@ -56,10 +56,11 @@ class StudentList(ListView):
     paginate_by = 5
 
     def get_queryset(self, *args, **kwargs):
-        qs = super(StudentList, self).get_queryset(*args, **kwargs)
+        qs = super().get_queryset(*args, **kwargs)
         if self.request.GET.get("q") != None:
-            query = self.request.GET.get("q")
-            qs = qs.filter(Q(firstname__icontains=query)|Q(lastname__icontains=query))
+            query = self.request.GET.get('q')
+            qs = qs.filter(Q(name__icontains=query) |
+                           Q(description__icontains=query))
         return qs
 
 class StudentCreateView(CreateView):
